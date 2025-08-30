@@ -10,5 +10,36 @@ const createBike =async (req,res)=>{
     catch(err){
         res.status(500).json({message:err.message});
     }
-}
-module.exports={createBike};
+};
+const getBike = async (req, res) => {
+  try {
+    const Bikes = await Bike.find();        
+    res.status(200).json({message :"Bikes fetch successfully", Bikes});
+  }catch (err) {
+    res.status(500).json({ message: err.message }); // Corrected 'message' typo
+  }
+};
+const updateBike = async (req, res) => 
+     {try{
+    const {id} = req.params;    
+    const {bikeName,model,price} = req.body;
+    const updatedBike = await Bike.findByIdAndUpdate(id, {bikeName,model,price}, {new: true});
+    res.status(200).json({message: "Bike updated successfully", updatedBike});
+  }catch(err){  
+    res.status(500).json({message:err.message})
+  }
+};
+const deleteBike = async (req, res) => {
+    try {
+      const { id } = req.params;
+        await Bike.findByIdAndDelete(id);
+        res.status(200).json({ message: "Bike deleted successfully" });
+    }catch (err) {
+      res.status(500).json({ message: err.message });
+}};
+
+module.exports=
+{createBike,
+    getBike,
+    updateBike,
+    deleteBike};

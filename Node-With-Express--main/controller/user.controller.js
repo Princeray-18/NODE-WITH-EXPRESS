@@ -1,5 +1,5 @@
 const User = require("../models/User.Model"); // Corrected path and filename
-
+// Create a new user
 const createUser = async (req, res) => {
   try {
     const { age, username, email } = req.body; // Use 'username' to match schema
@@ -12,7 +12,7 @@ const createUser = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
+// Get all users
 const getUsers = async (req, res) => {
   try {
     const Users = await User.find();
@@ -21,19 +21,18 @@ const getUsers = async (req, res) => {
     res.status(500).json({ message: err.message }); // Corrected 'message' typo
   }
 };
-
+ //Update by id
 const updateUser = async (req, res) => 
 
   {try{
     const {id} = req.params;
     const {age, username, email} = req.body;
-
-    // update user by id
-
     const updatedUser = await User.findByIdAndUpdate(id, {age, username, email}, {new: true});
     res.status(200).json({message: "User updated successfully", updatedUser});
   }catch(err){
     res.status(500).json({message:err.message})
+    
+    
   }
   }
   // Delete user by id
