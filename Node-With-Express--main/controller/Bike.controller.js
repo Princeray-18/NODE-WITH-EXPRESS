@@ -1,4 +1,4 @@
-const Bike = require("../models/Bike.modeol");
+const Bike = require("../models/Bike.model");
 
 
 const createBike =async (req,res)=>{

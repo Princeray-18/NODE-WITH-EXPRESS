@@ -1,11 +1,21 @@
 const User = require("../models/User.Model"); // Corrected path and filename
 // Create a new user
+const bcrypt=require('bcryptjs');
 const createUser = async (req, res) => {
   try {
-    const { age, username, email } = req.body; // Use 'username' to match schema
-
+    const { age, username,password, email } = req.body; // Use 'username' to match schema
+    console.log(req.body);
+    const exitingUser=await User.findOne({email});
+    if(exitingUser){
+      return res.status(400).json({message:"useralready exiting "});
+    }
+     const encryptpassword =await bcrypt.hash(password,10);
     // Create new user using the correct fields
-    const newUser = await User.create({ age, username, email });
+    const newUser = await User.create
+    ({ age,
+       username,
+        email,
+        password: encryptpassword });
 
     res.status(201).json({ message: "User created successfully", user: newUser }); // Use 201 for creation
   } catch (err) {

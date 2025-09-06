@@ -2,10 +2,12 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./db/db.config");
 const app = express();
+
 const userRouter = require("./routes/user.routes");
 const bikeRouter = require("./routes/Bike.routes");
 const bookRouter = require("./routes/Book.routes");
 const laptopRouter = require("./routes/Laptop.routes");
+
 dotenv.config(); // Load environment variables from .env file
 
 app.use(express.json()); // Middleware to parse JSON request bodies

@@ -1,4 +1,4 @@
-const Laptop = require("../models/laptop.models");
+const Laptop = require("../models/laptop.model");
 const createLaptop = async (req, res) => {
   try {
     const { laptopName, model, price } = req.body;
