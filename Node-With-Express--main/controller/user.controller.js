@@ -4,18 +4,22 @@ const jwt = require('jsonwebtoken'); // <-- Add this line
 
 const createUser = async (req, res) => {
   try {
-    const { age, username, password, email } = req.body;
+    const { age, username, password, email, } = req.body;
     console.log(req.body);
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
     const encryptPassword = await bcrypt.hash(password, 10);
+
+    const image=req.file? req.file.path : null;
+
     const newUser = await User.create({
       age,
       username,
       email,
-      password: encryptPassword
+      password: encryptPassword,
+      image,
     });
     res.status(201).json({ message: "User created successfully", user: newUser });
   } catch (err) {
@@ -76,10 +80,19 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  try{
+    res.status(200).json({ message: "Logout successful" });
+
+  }catch(err){
+    res.status(500).json({message:err.message})
+  }
+};
 module.exports = {
   createUser,
   getUsers,
   updateUser,
   deleteUser,
   login,
+  logout
 }
